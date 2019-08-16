@@ -1,0 +1,171 @@
+<html>
+
+<head>
+	<title>Signature Pad</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+	<style>
+		.container{
+		  margin : 0px;
+		}
+		.signpan{
+		  width : 300px;
+		  height: 310px;
+		  margin: 20px;
+		  background:grey;
+		  border-radius:10px;
+		}
+
+		.signpan-heading{
+		  margin-top:10px;
+
+		}
+		.mousetracker{
+		  background:lightgrey;
+		  margin:5px;
+		  width:290px;
+		  height:160px;
+		  border-radius:10px;
+		}
+
+		.clear{
+		 
+		}
+
+		.photoofsign{
+		  
+		  background:lightgrey;
+		  margin : 20px;
+		}
+		.download{
+		  margin:10px;
+		}
+		.signature{
+		  width : 300px;
+		  height : 260px;
+		}
+
+		.anchorMe{
+
+		}
+		.select{
+		margin : 5px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div clas="col-sm-12">
+		<div class="row">
+			<div class="col-sm-6">
+    				<center>
+					<div class="signpan">
+  						<div class="signpan-heading">Sign in Canvas</div>
+						  <canvas class="mousetracker" id="mousetracker" 
+						       onmousedown="draw(event);" onmousemove="drawSign(event);"
+						       onmouseup="stopDraw(event)">
+						  </canvas>
+					  
+						 <div class="clear">
+						    <center>
+							<strong>Color of sign : </strong><select id="selectColor" class="select" onchange="colorchange()">
+								<option>Red</option>
+								<option>Green</option>
+								<option>Blue</option>
+								<option>Black</option>
+							<select>
+							<br>
+							<strong>Width of signiture</strong><select id="selectWidth" class="select" onchange="widthchange()">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+							<select>
+							<br>
+						      <button class="btn btn-sm btn-primary" onclick = "clearCanvas()">Clear sign</button>
+						      <button class="btn btn-sm btn-success" onclick = "print()">Get an image</button>
+							
+						    </center>
+						  </div>
+					</div>   
+				</center>
+    			</div>
+    
+		<div class="col-sm-6">
+  			<center>  
+				<div class="photoofsign">
+  					<a download="mySign.png" id="signDown">
+  					<img id="signiture" src=""> 
+  					</a>
+				</div>
+    
+    			</center>
+		</div>
+    
+    
+	</div>
+    </div>
+  </div>
+</body>
+<script>
+var z = false;
+var color= "red";
+var width = 1;
+var mousetracker = document.getElementById("mousetracker").getContext("2d");
+var mousetrack = document.getElementById("mousetracker");
+
+function colorchange()
+{
+color = document.getElementById("selectColor").value;
+}
+
+function widthchange()
+{
+width = document.getElementById("selectWidth").value;
+}
+
+function draw(event){
+  var x_start = event.clientX;
+  var y_start = event.clientY;
+  mousetracker.beginPath();
+  mousetracker.moveTo(x_start-140,y_start-40);
+  z=true;
+}
+
+function stopDraw(event){
+  z=false;
+ 
+}
+
+function drawSign(event){  
+  if(z)
+    {
+      var x_draw = event.clientX;
+      var y_draw = event.clientY;
+      mousetracker.lineTo(x_draw-140,y_draw-40); 
+      mousetracker.strokeStyle = color;  
+      mousetracker.lineWidth = width;
+      mousetracker.stroke();
+    }
+}
+
+function clearCanvas(){
+   mousetracker.clearRect (0, 0, 290, 160);
+}
+
+function print()
+{
+      var url = mousetrack.toDataURL();
+      var image = document.getElementById("signiture").src = url;
+document.getElementById("signDown").href=url;
+}
+</script>
+</html>
+
